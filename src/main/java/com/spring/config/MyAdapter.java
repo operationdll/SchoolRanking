@@ -16,7 +16,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 import com.alibaba.fastjson.JSON;
 
-import token.TokenUtil;
+import util.TokenUtil;
 
 /**
  * 自定义拦截器

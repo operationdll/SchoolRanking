@@ -1,6 +1,6 @@
 com\spring\config\MyAdapter.class
-token\SpringBootMain.class
-token\ExcelUtil.class
+util\SpringBootMain.class
+util\TokenUtil.class
 com\spring\config\MapperScannerConfig.class
 com\dto\SchoolDto.class
 com\action\SchoolControl.class
@@ -8,6 +8,6 @@ com\dao\BaseMapper.class
 com\service\SchoolService.class
 com\spring\config\CorsConfig.class
 com\spring\config\MyBatisConfig.class
-token\TokenUtil.class
 com\spring\config\MyAdapter$1.class
+util\ExcelUtil.class
 com\spring\config\MySpringBootApplication.class

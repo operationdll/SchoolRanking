@@ -22,7 +22,7 @@ import com.alibaba.fastjson.JSON;
 import com.dto.SchoolDto;
 import com.service.SchoolService;
 
-import token.ExcelUtil;
+import util.ExcelUtil;
 
 @Controller
 @RequestMapping(value = "/school")
