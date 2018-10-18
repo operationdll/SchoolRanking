@@ -24,8 +24,8 @@ public class SchoolService {
 		this.baseMapper = baseMapper;
 	}
 	
-	public List<SchoolDto> selectSchools() {
-		return baseMapper.selectSchools();
+	public List<SchoolDto> selectSchools(String type) {
+		return baseMapper.selectSchools(type);
 	}
 
 	public int insertSchool(SchoolDto schoolDto) {

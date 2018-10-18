@@ -20,6 +20,7 @@ public class SchoolDto implements Serializable {
 	private String name;
 	private String country;
 	private int year;
+	private String type;
 
 	public int getId() {
 		return id;
@@ -59,5 +60,13 @@ public class SchoolDto implements Serializable {
 
 	public void setYear(int year) {
 		this.year = year;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 }

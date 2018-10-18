@@ -47,6 +47,7 @@ public class ExcelUtil {
 			String country = row.getCell(1).getStringCellValue();
 			int ranking = (int) row.getCell(2).getNumericCellValue();
 			int year = (int) row.getCell(3).getNumericCellValue();
+			String type = row.getCell(4).getStringCellValue();
 			if (name == null) {
 				break;
 			}
@@ -55,6 +56,7 @@ public class ExcelUtil {
 			schoolDto.setCountry(country);
 			schoolDto.setRanking(ranking);
 			schoolDto.setYear(year);
+			schoolDto.setType(type);
 
 			shools.add(schoolDto);
 		}
@@ -72,7 +74,7 @@ public class ExcelUtil {
 	}
 
 	public static void main(String[] args) {
-		File f = new File("d:/test.xlsx");
+		File f = new File("d:/schools.xlsx");
 		try {
 			List<SchoolDto> l = ExcelUtil.importData(f);
 			System.out.println(l);

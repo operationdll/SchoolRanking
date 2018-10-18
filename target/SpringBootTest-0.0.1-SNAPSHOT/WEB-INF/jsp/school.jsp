@@ -121,6 +121,9 @@
 											年份
 										</th>
 										<th>
+											类型
+										</th>
+										<th>
 											操作
 										</th>
 									</tr>
@@ -141,6 +144,9 @@
 										</td>
 										<td>
 											{{ item.year }}
+										</td>
+										<td>
+											{{ item.type }}
 										</td>
 										<td>
 											<a class="btn btn-primary"
@@ -207,6 +213,15 @@
 							</div>
 						</div>
 						<div class="control-group">
+							<label class="control-label" for="basicinput">
+								类型
+							</label>
+							<div class="controls">
+								<input type="text" ng-model="itemType" placeholder="请填写类型"
+									class="span8 tip">
+							</div>
+						</div>
+						<div class="control-group">
 							<div class="controls">
 								<button class="btn" type="submit" ng-click="addItemSub()">
 									提交
@@ -261,6 +276,7 @@
 			    $scope.itemName = '';
 			    $scope.itemCountry = '';
 			    $scope.itemYear = '';
+			    $scope.itemType = '';
 			    //添加区域信息
 			    $scope.addItem = function() {
 			        $scope.addShow = true;
@@ -271,6 +287,7 @@
 				    $scope.itemName = '';
 				    $scope.itemCountry = '';
 				    $scope.itemYear = '';
+				    $scope.itemType = '';
 			    };
 			    //添加学校提交
 			    $scope.addItemSub = function() {
@@ -294,6 +311,11 @@
 			        	$scope.addError = true;
 			        	return;
 			        }
+			        if($scope.itemType==null||$scope.itemType == ''){
+			        	$scope.err = '请填写类型';
+			        	$scope.addError = true;
+			        	return;
+			        }
 			        $scope.addError = false;
 		        	$scope.loadingShow = true;
 		        	//排名
@@ -306,6 +328,8 @@
 		        	itemCountry = encodeURI(itemCountry);
 		        	//年份
 		        	var itemYear = $scope.itemYear;
+		        	//类型
+		        	var itemType = $scope.itemType;
 		         	if($scope.itemId==""){
 		         		//增加学校信息
 					    $http({
@@ -316,6 +340,7 @@
 					        	name:itemName,
 					        	country:itemCountry,
 					        	year:itemYear,
+					        	type:itemType
 							}
 					    }).then(function mySucces(response) {
 					        if(response.data.code==0){
@@ -333,6 +358,7 @@
 						    $scope.itemName = '';
 						    $scope.itemCountry = '';
 						    $scope.itemYear = '';
+						    $scope.itemType = '';
 					    }, function myError(response) {
 					        alert("addItemSub.do访问错误出错!");
 					        console.log(response.statusText);
@@ -348,6 +374,7 @@
 					        	name:itemName,
 					        	country:itemCountry,
 					        	year:itemYear,
+					        	type:itemType,
 								id:id
 							}
 					    }).then(function mySucces(response) {
@@ -366,6 +393,7 @@
 						    $scope.itemName = '';
 						    $scope.itemCountry = '';
 						    $scope.itemYear = '';
+						    $scope.itemType = '';
 					    }, function myError(response) {
 					        alert("updArea.do访问错误出错!");
 					        console.log(response.statusText);
@@ -408,6 +436,7 @@
 				    $scope.itemName = item.name;
 				    $scope.itemCountry = item.country;
 				    $scope.itemYear = item.year;
+				    $scope.itemType = item.type;
 			    };
 			});
 		</script>

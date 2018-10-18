@@ -4,12 +4,12 @@
 	<resultMap id="SchoolMap" type="com.dto.SchoolDto"></resultMap>
 
 	<!-- 区域信息 -->
-	<select id="selectSchools" resultMap="SchoolMap">
-		select * from schools
+	<select id="selectSchools" resultMap="SchoolMap" parameterType="string">
+		select * from schools where type = #{type}
 	</select>
 
 	<insert id="insertSchool" parameterType="com.dto.SchoolDto">
-		INSERT INTO schools(ranking,name,country,year) VALUES(#{ranking,jdbcType=INTEGER},#{name},#{country},#{year,jdbcType=INTEGER})
+		INSERT INTO schools(ranking,name,country,year,type) VALUES(#{ranking,jdbcType=INTEGER},#{name},#{country},#{year,jdbcType=INTEGER},#{type})
 	</insert>
 
 	<delete id="deleteSchool" parameterType="int">
@@ -17,7 +17,7 @@
 	</delete>
 
 	<update id="updateSchool" parameterType="com.dto.SchoolDto">
-		update schools set name = #{name},ranking = #{ranking},country = #{country},year = #{year} where id = #{id,jdbcType=INTEGER}
+		update schools set name = #{name},ranking = #{ranking},country = #{country},year = #{year},type = #{type} where id = #{id,jdbcType=INTEGER}
 	</update>
 	
 	<!-- 

@@ -13,7 +13,7 @@ import com.dto.SchoolDto;
 public interface BaseMapper {
 
 	// 学校信息
-	List<SchoolDto> selectSchools();
+	List<SchoolDto> selectSchools(String type);
 
 	int insertSchool(SchoolDto schoolDto);
 

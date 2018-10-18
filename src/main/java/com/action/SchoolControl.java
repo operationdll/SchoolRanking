@@ -85,7 +85,7 @@ public class SchoolControl {
 	@RequestMapping(value = "/getSchoolList.do", method = { RequestMethod.GET })
 	public void getSchoolList(HttpServletRequest req, HttpServletResponse response, Model model) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("datas", schoolService.selectSchools());
+		map.put("datas", schoolService.selectSchools("ranking"));
 		response.setContentType("application/json; charset=UTF-8");
 		PrintWriter out = null;
 		try {
@@ -107,7 +107,7 @@ public class SchoolControl {
 	 */
 	@RequestMapping(value = "/addItem.do", method = { RequestMethod.POST })
 	public void addItem(HttpServletRequest req, HttpServletResponse response, int ranking, String name, String country,
-			int year) {
+			int year, String type) {
 		response.setContentType("application/json; charset=UTF-8");
 		PrintWriter out = null;
 		try {
@@ -116,6 +116,7 @@ public class SchoolControl {
 			schoolDto.setName(URLDecoder.decode(name, "UTF-8"));
 			schoolDto.setCountry(URLDecoder.decode(country, "UTF-8"));
 			schoolDto.setYear(year);
+			schoolDto.setType(type);
 			int num = schoolService.insertSchool(schoolDto);
 			out = response.getWriter();
 			if (num > 0) {
@@ -171,7 +172,7 @@ public class SchoolControl {
 	 */
 	@RequestMapping(value = "/updItem.do", method = { RequestMethod.PUT })
 	public void updItem(HttpServletRequest req, HttpServletResponse response, int id, int ranking, String name,
-			String country, int year) {
+			String country, int year, String type) {
 		response.setContentType("application/json; charset=UTF-8");
 		PrintWriter out = null;
 		try {
@@ -181,6 +182,7 @@ public class SchoolControl {
 			schoolDto.setCountry(URLDecoder.decode(country, "UTF-8"));
 			schoolDto.setYear(year);
 			schoolDto.setId(id);
+			schoolDto.setType(type);
 			int num = schoolService.updateSchool(schoolDto);
 			out = response.getWriter();
 			if (num > 0) {
