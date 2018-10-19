@@ -21,4 +21,7 @@ public interface BaseMapper {
 
 	int updateSchool(SchoolDto schoolDto);
 
+	// 获取类型信息
+	List<String> getTypes();
+
 }

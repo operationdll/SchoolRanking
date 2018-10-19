@@ -3,9 +3,17 @@
 <mapper namespace="com.dao.BaseMapper">
 	<resultMap id="SchoolMap" type="com.dto.SchoolDto"></resultMap>
 
-	<!-- 区域信息 -->
+	<!-- 学校信息 -->
 	<select id="selectSchools" resultMap="SchoolMap" parameterType="string">
-		select * from schools where type = #{type}
+		select * from schools where 1=1
+        <if test='_parameter != null'>  
+           and type = #{type}
+        </if>   
+	</select>
+	
+	<!-- 类型信息 -->
+	<select id="getTypes" resultType="string">
+		select DISTINCT type from schools
 	</select>
 
 	<insert id="insertSchool" parameterType="com.dto.SchoolDto">

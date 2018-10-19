@@ -83,9 +83,9 @@ public class SchoolControl {
 	 * @param model
 	 */
 	@RequestMapping(value = "/getSchoolList.do", method = { RequestMethod.GET })
-	public void getSchoolList(HttpServletRequest req, HttpServletResponse response, Model model) {
+	public void getSchoolList(HttpServletRequest req, HttpServletResponse response, Model model, String schoolType) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("datas", schoolService.selectSchools("ranking"));
+		map.put("datas", schoolService.selectSchools(schoolType));
 		response.setContentType("application/json; charset=UTF-8");
 		PrintWriter out = null;
 		try {
@@ -94,7 +94,30 @@ public class SchoolControl {
 			out.flush();
 			out.close();
 		} catch (Exception e) {
-			log.error("SchoolControl->getAreaList报错:" + e);
+			log.error("SchoolControl->getSchoolList报错:" + e);
+		}
+	}
+
+	/**
+	 * 获取类型信息
+	 * 
+	 * @param req
+	 * @param response
+	 * @param model
+	 */
+	@RequestMapping(value = "/getTypes.do", method = { RequestMethod.GET })
+	public void getTypes(HttpServletRequest req, HttpServletResponse response, Model model) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("datas", schoolService.getTypes());
+		response.setContentType("application/json; charset=UTF-8");
+		PrintWriter out = null;
+		try {
+			out = response.getWriter();
+			out.print(JSON.toJSONString(map));
+			out.flush();
+			out.close();
+		} catch (Exception e) {
+			log.error("SchoolControl->getTypes报错:" + e);
 		}
 	}
 

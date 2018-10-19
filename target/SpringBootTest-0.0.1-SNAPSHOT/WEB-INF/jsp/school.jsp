@@ -99,8 +99,15 @@
 						<div id="DataTables_Table_0_wrapper" class="dataTables_wrapper"
 							role="grid">
 							<div id="DataTables_Table_0_length" class="dataTables_length">
-								<a class="btn btn-success" ng-click="addItem()">添加</a>
-								<a class="btn btn-success" href="school/initXSL.do">导入excel</a>
+								<label> 搜索
+									<select size="1" name="DataTables_Table_0_length"
+										aria-controls="DataTables_Table_0" ng-change="updateType()" ng-model="selectedItem">
+											<option value="">---请选择---</option>
+											<option ng-repeat="item in types" value="{{ item }}">{{ item }}</option>
+									</select> 
+									<a class="btn btn-success" ng-click="addItem()">添加</a> 
+									<a class="btn btn-success" href="school/initXSL.do">导入excel</a>
+								</label>
 							</div>
 							<table class="table table-striped table-bordered table-condensed">
 								<thead>
@@ -246,10 +253,12 @@
 			type="text/javascript"></script>
 		<script type="text/javascript">
 			//初始化List信息
-			function initListData($http,$scope){
+			function initListData($http,$scope,schoolType){
+				var $schoolType==undefined?null:schoolType;
 			    $http({
 			        method : "GET",
-			        url : "<%=basePath%>school/getSchoolList.do"
+			        url : "<%=basePath%>school/getSchoolList.do",
+				       params: {schoolType:$schoolType}
 			    }).then(function mySucces(response) {
 			    	$scope.loadingShow = false;
 			        $scope.items = response.data.datas;
@@ -260,10 +269,27 @@
 			    });
 			}
 			
+			//初始化类型信息
+			function initTypes($http,$scope){
+			    $http({
+			        method : "GET",
+			        url : "<%=basePath%>school/getTypes.do"
+			    }).then(function mySucces(response) {
+			    	$scope.loadingShow = false;
+			        $scope.types = response.data.datas;
+			    }, function myError(response) {
+			    	$scope.loadingShow = false;
+			        alert("school->getTypes.do访问错误出错!");
+			        console.log(response.statusText);
+			    });
+			}
+			
 			var app = angular.module('myApp', []);
 			app.controller('myCtrl', function($scope,$http) {
 				//初始化学校信息
 			    initListData($http,$scope);
+			  	//初始化类型信息
+				initTypes($http,$scope);
 			    //隐藏加载框
 				$scope.loadingShow = true;
 				//学校信息
@@ -438,6 +464,15 @@
 				    $scope.itemYear = item.year;
 				    $scope.itemType = item.type;
 			    };
+			  	//改变类型信息
+			    $scope.updateType = function() {
+			  		var selectedItem = $scope.selectedItem;
+					if(selectedItem==""){
+						initListData($http,$scope);
+					}else{
+						initListData($http,$scope,selectedItem);
+					}
+			  	}
 			});
 		</script>
 	</body>

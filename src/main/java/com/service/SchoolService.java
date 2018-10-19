@@ -23,7 +23,7 @@ public class SchoolService {
 	public void setBaseMapper(BaseMapper baseMapper) {
 		this.baseMapper = baseMapper;
 	}
-	
+
 	public List<SchoolDto> selectSchools(String type) {
 		return baseMapper.selectSchools(type);
 	}
@@ -38,6 +38,10 @@ public class SchoolService {
 
 	public int updateSchool(SchoolDto schoolDto) {
 		return baseMapper.updateSchool(schoolDto);
+	}
+
+	public List<String> getTypes() {
+		return baseMapper.getTypes();
 	}
 
 }
