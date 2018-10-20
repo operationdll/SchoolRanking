@@ -17,7 +17,7 @@
 	</select>
 
 	<insert id="insertSchool" parameterType="com.dto.SchoolDto">
-		INSERT INTO schools(ranking,name,country,year,type) VALUES(#{ranking,jdbcType=INTEGER},#{name},#{country},#{year,jdbcType=INTEGER},#{type})
+		INSERT INTO schools(ranking,name,country,year,type) VALUES(#{ranking},#{name},#{country},#{year,jdbcType=INTEGER},#{type})
 	</insert>
 
 	<delete id="deleteSchool" parameterType="int">

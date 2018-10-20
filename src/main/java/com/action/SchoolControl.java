@@ -1,5 +1,6 @@
 package com.action;
 
+import java.io.File;
 import java.io.PrintWriter;
 import java.net.URLDecoder;
 import java.util.HashMap;
@@ -129,8 +130,8 @@ public class SchoolControl {
 	 * @param name
 	 */
 	@RequestMapping(value = "/addItem.do", method = { RequestMethod.POST })
-	public void addItem(HttpServletRequest req, HttpServletResponse response, int ranking, String name, String country,
-			int year, String type) {
+	public void addItem(HttpServletRequest req, HttpServletResponse response, String ranking, String name,
+			String country, int year, String type) {
 		response.setContentType("application/json; charset=UTF-8");
 		PrintWriter out = null;
 		try {
@@ -194,7 +195,7 @@ public class SchoolControl {
 	 * @param name
 	 */
 	@RequestMapping(value = "/updItem.do", method = { RequestMethod.PUT })
-	public void updItem(HttpServletRequest req, HttpServletResponse response, int id, int ranking, String name,
+	public void updItem(HttpServletRequest req, HttpServletResponse response, int id, String ranking, String name,
 			String country, int year, String type) {
 		response.setContentType("application/json; charset=UTF-8");
 		PrintWriter out = null;
@@ -233,7 +234,9 @@ public class SchoolControl {
 		PrintWriter out = null;
 		try {
 			out = response.getWriter();
-			List<SchoolDto> schools = ExcelUtil.importData(ExcelUtil.convert(file));
+			File f = ExcelUtil.convert(file);
+			List<SchoolDto> schools = ExcelUtil.importData(f);
+			f.delete();
 			boolean bol = true;
 			for (SchoolDto schoolDto : schools) {
 				int num = schoolService.insertSchool(schoolDto);
@@ -249,10 +252,16 @@ public class SchoolControl {
 			} else {
 				out.println("alert('导入失败！');");
 			}
-			out.println("window.location = '/school/init.do';");
+			out.println("window.location = '/school/initXSL.do';");// init.do
 			out.println("</script>");
 		} catch (Exception e) {
 			log.error("SchoolControl->upload报错:" + e.toString());
+			response.setContentType("text/html; charset=UTF-8"); // 转码
+			out.flush();
+			out.println("<script>");
+			out.println("alert('导入失败！');");
+			out.println("window.location = '/school/initXSL.do';");// init.do
+			out.println("</script>");
 		} finally {
 			if (out != null) {
 				out.flush();

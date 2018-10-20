@@ -41,11 +41,11 @@ public class ExcelUtil {
 		// 获取总的sheet数量
 		// int numberOfSheets = wb.getNumberOfSheets();
 		Sheet sheet = wb.getSheetAt(0);// 获取第一个sheet
-		for (int i = 0; i < sheet.getPhysicalNumberOfRows(); i++) {
+		for (int i = 1; i < sheet.getPhysicalNumberOfRows(); i++) {
 			Row row = sheet.getRow(i);// 获取索引为i的行，以0开始
-			String name = row.getCell(0).getStringCellValue();
-			String country = row.getCell(1).getStringCellValue();
-			int ranking = (int) row.getCell(2).getNumericCellValue();
+			String ranking = row.getCell(0).getStringCellValue();
+			String name = row.getCell(1).getStringCellValue();
+			String country = row.getCell(2).getStringCellValue();
 			int year = (int) row.getCell(3).getNumericCellValue();
 			String type = row.getCell(4).getStringCellValue();
 			if (name == null) {
@@ -77,7 +77,7 @@ public class ExcelUtil {
 		File f = new File("d:/schools.xlsx");
 		try {
 			List<SchoolDto> l = ExcelUtil.importData(f);
-			System.out.println(l);
+			System.out.println(l.size());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

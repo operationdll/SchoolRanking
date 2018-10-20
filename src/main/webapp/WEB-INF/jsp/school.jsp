@@ -187,7 +187,7 @@
 								排名
 							</label>
 							<div class="controls">
-								<input type="number" ng-model="itemRanking" placeholder="请填写学校排名"
+								<input type="text" ng-model="itemRanking" placeholder="请填写学校排名"
 									class="span8 tip">
 							</div>
 						</div>

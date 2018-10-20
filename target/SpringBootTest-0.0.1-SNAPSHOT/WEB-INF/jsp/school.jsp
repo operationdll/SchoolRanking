@@ -187,7 +187,7 @@
 								排名
 							</label>
 							<div class="controls">
-								<input type="number" ng-model="itemRanking" placeholder="请填写学校排名"
+								<input type="text" ng-model="itemRanking" placeholder="请填写学校排名"
 									class="span8 tip">
 							</div>
 						</div>
@@ -254,7 +254,7 @@
 		<script type="text/javascript">
 			//初始化List信息
 			function initListData($http,$scope,schoolType){
-				var $schoolType==undefined?null:schoolType;
+				var $schoolType=schoolType==undefined?null:schoolType;
 			    $http({
 			        method : "GET",
 			        url : "<%=basePath%>school/getSchoolList.do",

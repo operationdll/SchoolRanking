@@ -16,7 +16,7 @@ public class SchoolDto implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private int id;
-	private int ranking;
+	private String ranking;
 	private String name;
 	private String country;
 	private int year;
@@ -30,11 +30,11 @@ public class SchoolDto implements Serializable {
 		this.id = id;
 	}
 
-	public int getRanking() {
+	public String getRanking() {
 		return ranking;
 	}
 
-	public void setRanking(int ranking) {
+	public void setRanking(String ranking) {
 		this.ranking = ranking;
 	}
 

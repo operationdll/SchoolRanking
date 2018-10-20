@@ -52,6 +52,8 @@ public class MySpringBootApplication extends SpringBootServletInitializer {
 		boneCPDataSource.setMaxConnectionsPerPartition(100);
 		// 每个分区最小的连接数
 		boneCPDataSource.setMinConnectionsPerPartition(5);
+		// 设置连接池名称
+		boneCPDataSource.setPoolName("schoolranking");
 		return boneCPDataSource;
 	}
 
