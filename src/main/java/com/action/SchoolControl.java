@@ -24,6 +24,7 @@ import com.dto.SchoolDto;
 import com.service.SchoolService;
 
 import util.ExcelUtil;
+import util.PaginationUtil;
 
 @Controller
 @RequestMapping(value = "/school")
@@ -86,7 +87,8 @@ public class SchoolControl {
 	@RequestMapping(value = "/getSchoolList.do", method = { RequestMethod.GET })
 	public void getSchoolList(HttpServletRequest req, HttpServletResponse response, Model model, String schoolType) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("datas", schoolService.selectSchools(schoolType));
+		PaginationUtil.results = schoolService.selectSchools(schoolType);
+		map.put("datas", PaginationUtil.getResults(1));
 		response.setContentType("application/json; charset=UTF-8");
 		PrintWriter out = null;
 		try {
@@ -96,6 +98,29 @@ public class SchoolControl {
 			out.close();
 		} catch (Exception e) {
 			log.error("SchoolControl->getSchoolList报错:" + e);
+		}
+	}
+	
+	/**
+	 * 获取更多信息
+	 * 
+	 * @param req
+	 * @param response
+	 * @param model
+	 */
+	@RequestMapping(value = "/getMore.do", method = { RequestMethod.GET })
+	public void getMore(HttpServletRequest req, HttpServletResponse response, Model model, Integer page) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("datas", PaginationUtil.getResults(page));
+		response.setContentType("application/json; charset=UTF-8");
+		PrintWriter out = null;
+		try {
+			out = response.getWriter();
+			out.print(JSON.toJSONString(map));
+			out.flush();
+			out.close();
+		} catch (Exception e) {
+			log.error("SchoolControl->getMore报错:" + e);
 		}
 	}
 

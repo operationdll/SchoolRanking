@@ -4,9 +4,10 @@ D:\work\SchoolRanking\src\main\java\util\ExcelUtil.java
 D:\work\SchoolRanking\src\main\java\com\dto\SchoolDto.java
 D:\work\SchoolRanking\src\main\java\com\spring\config\CorsConfig.java
 D:\work\SchoolRanking\src\main\java\com\service\SchoolService.java
-D:\work\SchoolRanking\src\main\java\com\spring\config\MapperScannerConfig.java
 D:\work\SchoolRanking\src\main\java\util\TokenUtil.java
+D:\work\SchoolRanking\src\main\java\com\action\SchoolControl.java
+D:\work\SchoolRanking\src\main\java\com\spring\config\MapperScannerConfig.java
 D:\work\SchoolRanking\src\main\java\util\SpringBootMain.java
 D:\work\SchoolRanking\src\main\java\com\spring\config\MySpringBootApplication.java
-D:\work\SchoolRanking\src\main\java\com\action\SchoolControl.java
+D:\work\SchoolRanking\src\main\java\util\PaginationUtil.java
 D:\work\SchoolRanking\src\main\java\com\spring\config\MyBatisConfig.java

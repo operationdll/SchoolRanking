@@ -1,4 +1,5 @@
 com\spring\config\MyAdapter.class
+util\PaginationUtil.class
 util\SpringBootMain.class
 util\TokenUtil.class
 com\spring\config\MapperScannerConfig.class

@@ -109,60 +109,62 @@
 									<a class="btn btn-success" href="school/initXSL.do">导入excel</a>
 								</label>
 							</div>
-							<table class="table table-striped table-bordered table-condensed">
-								<thead>
-									<tr>
-										<th>
-											ID
-										</th>
-										<th>
-											排名
-										</th>
-										<th>
-											学校名称
-										</th>
-										<th>
-											国家
-										</th>
-										<th>
-											年份
-										</th>
-										<th>
-											类型
-										</th>
-										<th>
-											操作
-										</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr ng-repeat="item in items">
-										<td>
-											{{ item.id }}
-										</td>
-										<td>
-											{{ item.ranking }}
-										</td>
-										<td>
-											{{ item.name }}
-										</td>
-										<td>
-											{{ item.country }}
-										</td>
-										<td>
-											{{ item.year }}
-										</td>
-										<td>
-											{{ item.type }}
-										</td>
-										<td>
-											<a class="btn btn-primary"
-												ng-click="showUpdItem(item)">修改</a>
-											<a class="btn btn-danger" ng-click="delItem(item.id)">删除</a>
-										</td>
-									</tr>
-								</tbody>
-							</table>
+							<div style="height:70%;overflow-y:scroll; width:98%;" id="myscroll">
+								<table class="table table-striped table-bordered table-condensed">
+									<thead>
+										<tr>
+											<th>
+												ID
+											</th>
+											<th>
+												排名
+											</th>
+											<th>
+												学校名称
+											</th>
+											<th>
+												国家
+											</th>
+											<th>
+												年份
+											</th>
+											<th>
+												类型
+											</th>
+											<th>
+												操作
+											</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr ng-repeat="item in items">
+											<td>
+												{{ item.id }}
+											</td>
+											<td>
+												{{ item.ranking }}
+											</td>
+											<td>
+												{{ item.name }}
+											</td>
+											<td>
+												{{ item.country }}
+											</td>
+											<td>
+												{{ item.year }}
+											</td>
+											<td>
+												{{ item.type }}
+											</td>
+											<td>
+												<a class="btn btn-primary"
+													ng-click="showUpdItem(item)">修改</a>
+												<a class="btn btn-danger" ng-click="delItem(item.id)">删除</a>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -251,6 +253,8 @@
 		</div>
 		<script src="<%=basePath%>js/angular1.4.8.min.js"
 			type="text/javascript"></script>
+		<script src="<%=basePath%>js/jquery-3.1.1.min.js"
+			type="text/javascript"></script>
 		<script type="text/javascript">
 			//初始化List信息
 			function initListData($http,$scope,schoolType){
@@ -258,10 +262,12 @@
 			    $http({
 			        method : "GET",
 			        url : "<%=basePath%>school/getSchoolList.do",
-				       params: {schoolType:$schoolType}
+				    params: {schoolType:$schoolType}
 			    }).then(function mySucces(response) {
 			    	$scope.loadingShow = false;
-			        $scope.items = response.data.datas;
+			        $scope.items = response.data.datas.result;
+			        $scope.totalpage =  response.data.datas.totalpage;
+			        $scope.page =  1;
 			    }, function myError(response) {
 			    	$scope.loadingShow = false;
 			        alert("school->getSchoolList.do访问错误出错!");
@@ -466,6 +472,7 @@
 			    };
 			  	//改变类型信息
 			    $scope.updateType = function() {
+			    	$("#myscroll").scrollTop(0);
 			  		var selectedItem = $scope.selectedItem;
 					if(selectedItem==""){
 						initListData($http,$scope);
@@ -473,6 +480,37 @@
 						initListData($http,$scope,selectedItem);
 					}
 			  	}
+			  	//初始化滚动加载事件
+				$(function(){
+					$("#myscroll").scrollTop(0);
+					$("#myscroll").scroll(function(){
+		                if($scope.page < $scope.totalpage){
+		                    let bodyTop = $("#myscroll").scrollTop();
+		                    let winH = $(window).height();
+		                    let bodyH = $("#myscroll")[0].scrollHeight;
+		                    let rollH = bodyTop + winH + 100;
+		                    if(rollH>=bodyH){
+		                    	$scope.page = $scope.page+1;
+		                    	var currentPage = $scope.page;
+		                    	$http({
+		        			        method : "GET",
+		        			        url : "<%=basePath%>school/getMore.do",
+		        				    params: {page:currentPage}
+		        			    }).then(function mySucces(response) {
+		        			    	$scope.loadingShow = false;
+		        			    	console.log(response.data.datas.result);
+		        			        response.data.datas.result.forEach(function(element) {
+		        			        	$scope.items.push(element);
+                                    });
+		        			    }, function myError(response) {
+		        			    	$scope.loadingShow = false;
+		        			        alert("school->getMore.do访问错误出错!");
+		        			        console.log(response.statusText);
+		        			    });
+		                    }
+		                }
+		            });
+				});
 			});
 		</script>
 	</body>
