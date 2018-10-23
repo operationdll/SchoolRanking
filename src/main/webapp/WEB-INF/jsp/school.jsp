@@ -498,7 +498,6 @@
 		        				    params: {page:currentPage}
 		        			    }).then(function mySucces(response) {
 		        			    	$scope.loadingShow = false;
-		        			    	console.log(response.data.datas.result);
 		        			        response.data.datas.result.forEach(function(element) {
 		        			        	$scope.items.push(element);
                                     });
