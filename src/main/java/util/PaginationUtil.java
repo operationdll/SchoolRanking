@@ -24,6 +24,9 @@ public class PaginationUtil<T> {
 		Map<String, Object> map = new HashMap<String, Object>();
 		int start = (pageNo - 1) * this.pageSize;
 		int end = pageNo * this.pageSize;
+		if (end > this.totalCount) {
+			end = this.totalCount;
+		}
 		map.put("result", pageList.subList(start, end));
 		map.put("totalpage", this.totalPages);
 		return map;
