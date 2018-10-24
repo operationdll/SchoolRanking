@@ -4,20 +4,15 @@
 	<resultMap id="SchoolMap" type="com.dto.SchoolDto"></resultMap>
 
 	<!-- 学校信息 -->
-	<select id="selectSchools" resultMap="SchoolMap" parameterType="string">
+	<select id="selectSchools" resultMap="SchoolMap" parameterType="map">
 		select * from schools where 1=1
-        <if test='_parameter != null'>  
+        <if test="type !='' and type != null">
            and type = #{type}
         </if>
-	</select>
-	
-	<!-- 学校信息 -->
-	<select id="getMore" resultMap="SchoolMap" parameterType="map">
-		select * from schools where 1=1
-        <if test='type != null'>  
-           and type = #{type}
+        <if test="name !='' and name != null">
+           and name like '%${name}%'
         </if>
-        <if test='start != null'>  
+        <if test="start != null">  
            limit #{start},#{end}
         </if>
 	</select>
@@ -38,29 +33,5 @@
 	<update id="updateSchool" parameterType="com.dto.SchoolDto">
 		update schools set name = #{name},ranking = #{ranking},country = #{country},year = #{year},type = #{type} where id = #{id,jdbcType=INTEGER}
 	</update>
-	
-	<!-- 
-	<select id="searchStreets" resultMap="StreetMap" parameterType="com.dto.StreetDto">
-		select 
-			t1.id aid, 
-			t1.name aName, 
-			t2.id sid, 
-			t2.name sName,
-			t3.id, 
-			t3.name 
-		from areas t1 right join schools t2 on t1.id =
-		t2.aid right join streets t3 on t3.sid = t2.id
-		where 1=1
-		<if test='aid != 0'>  
-           and t2.aid=#{aid,jdbcType=INTEGER}  
-        </if>
-		<if test='sid != 0'>  
-           and t3.sid=#{sid,jdbcType=INTEGER}  
-        </if>
-        <if test='name != null'>  
-           and t3.name like concat('%',#{name,jdbcType=VARCHAR},'%')
-        </if>  
-	</select>
-	-->
 	
 </mapper>

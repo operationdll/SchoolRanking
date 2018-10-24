@@ -14,10 +14,7 @@ import com.dto.SchoolDto;
 public interface BaseMapper {
 
 	// 学校信息
-	List<SchoolDto> selectSchools(String type);
-
-	// 更多学校信息
-	List<SchoolDto> getMore(Map<String, Object> map);
+	List<SchoolDto> selectSchools(Map<String, Object> map);
 
 	int insertSchool(SchoolDto schoolDto);
 

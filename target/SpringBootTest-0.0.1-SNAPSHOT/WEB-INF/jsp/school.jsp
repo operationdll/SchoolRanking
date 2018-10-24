@@ -101,10 +101,12 @@
 							<div id="DataTables_Table_0_length" class="dataTables_length">
 								<label> 搜索
 									<select size="1" name="DataTables_Table_0_length"
-										aria-controls="DataTables_Table_0" ng-change="updateType()" ng-model="selectedItem">
+										aria-controls="DataTables_Table_0" ng-model="selectedItem">
 											<option value="">---请选择---</option>
 											<option ng-repeat="item in types" value="{{ item }}">{{ item }}</option>
-									</select> 
+									</select>
+									<input type="text" ng-model="schoolName" style="height: 30px;width: 200px;"/>
+									<a class="btn btn-success" ng-click="search()">搜索</a></br></br>
 									<a class="btn btn-success" ng-click="addItem()">添加</a> 
 									<a class="btn btn-success" href="school/initXSL.do">导入excel</a>
 								</label>
@@ -114,7 +116,7 @@
 									<thead>
 										<tr>
 											<th>
-												ID
+												行号
 											</th>
 											<th>
 												排名
@@ -139,7 +141,7 @@
 									<tbody>
 										<tr ng-repeat="item in items">
 											<td>
-												{{ item.id }}
+												{{ $index +1 }}
 											</td>
 											<td>
 												{{ item.ranking }}
@@ -259,10 +261,11 @@
 			//初始化List信息
 			function initListData($http,$scope,schoolType){
 				var $schoolType=schoolType==undefined?null:schoolType;
+				var $shcoolName = $scope.schoolName;
 			    $http({
 			        method : "GET",
 			        url : "<%=basePath%>school/getSchoolList.do",
-				    params: {schoolType:$schoolType}
+				    params: {schoolType:$schoolType,name:$shcoolName}
 			    }).then(function mySucces(response) {
 			    	$scope.loadingShow = false;
 			        $scope.items = response.data.datas.result;
@@ -471,7 +474,7 @@
 				    $scope.itemType = item.type;
 			    };
 			  	//改变类型信息
-			    $scope.updateType = function() {
+			    $scope.search = function() {
 			    	$("#myscroll").scrollTop(0);
 			  		var selectedItem = $scope.selectedItem;
 					if(selectedItem==""){
@@ -495,10 +498,11 @@
 		                    if(rollH>=bodyH){
 		                    	$scope.page = $scope.page+1;
 		                    	var currentPage = $scope.page;
-		                    	var $params = {page:currentPage};
+		                    	var $shcoolName = $scope.schoolName;
+		                    	var $params = {page:currentPage,name:$shcoolName};
 		                    	var selectedItem = $scope.selectedItem;
 		    					if(selectedItem!=""){
-		    						$params = {page:currentPage,type:selectedItem};
+		    						$params = {page:currentPage,type:selectedItem,name:$shcoolName};
 		    					}
 		    					$scope.loadingShow = true;
 		                    	$http({

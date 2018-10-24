@@ -85,9 +85,12 @@ public class SchoolControl {
 	 * @param model
 	 */
 	@RequestMapping(value = "/getSchoolList.do", method = { RequestMethod.GET })
-	public void getSchoolList(HttpServletRequest req, HttpServletResponse response, Model model, String schoolType) {
+	public void getSchoolList(HttpServletRequest req, HttpServletResponse response, Model model, String schoolType,String name) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		PaginationUtil<SchoolDto> pageUtil = new PaginationUtil<SchoolDto>(schoolService.selectSchools(schoolType));
+		map.put("type", schoolType);
+		map.put("name", name);
+		PaginationUtil<SchoolDto> pageUtil = new PaginationUtil<SchoolDto>(schoolService.selectSchools(map));
+		map = new HashMap<String, Object>();
 		map.put("datas", pageUtil.subList(1));
 		response.setContentType("application/json; charset=UTF-8");
 		PrintWriter out = null;
@@ -109,12 +112,13 @@ public class SchoolControl {
 	 * @param model
 	 */
 	@RequestMapping(value = "/getMore.do", method = { RequestMethod.GET })
-	public void getMore(HttpServletRequest req, HttpServletResponse response, Model model, Integer page, String type) {
+	public void getMore(HttpServletRequest req, HttpServletResponse response, Model model, Integer page, String type,String name) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("type", type);
+		map.put("name", name);
 		map.put("start", (page - 1) * PaginationUtil.pageSize);
 		map.put("end", PaginationUtil.pageSize);
-		map.put("datas", schoolService.getMore(map));
+		map.put("datas", schoolService.selectSchools(map));
 		response.setContentType("application/json; charset=UTF-8");
 		PrintWriter out = null;
 		try {
