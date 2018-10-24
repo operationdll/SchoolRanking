@@ -484,6 +484,9 @@
 				$(function(){
 					$("#myscroll").scrollTop(0);
 					$("#myscroll").scroll(function(){
+						if($scope.loadingShow){
+							return;
+						}
 		                if($scope.page < $scope.totalpage){
 		                    let bodyTop = $("#myscroll").scrollTop();
 		                    let winH = $(window).height();
@@ -497,6 +500,7 @@
 		    					if(selectedItem!=""){
 		    						$params = {page:currentPage,type:selectedItem};
 		    					}
+		    					$scope.loadingShow = true;
 		                    	$http({
 		        			        method : "GET",
 		        			        url : "<%=basePath%>school/getMore.do",

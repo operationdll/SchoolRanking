@@ -113,7 +113,7 @@ public class SchoolControl {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("type", type);
 		map.put("start", (page - 1) * PaginationUtil.pageSize);
-		map.put("end", page * PaginationUtil.pageSize);
+		map.put("end", PaginationUtil.pageSize);
 		map.put("datas", schoolService.getMore(map));
 		response.setContentType("application/json; charset=UTF-8");
 		PrintWriter out = null;
