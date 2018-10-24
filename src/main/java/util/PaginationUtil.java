@@ -1,47 +1,64 @@
 package util;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class PaginationUtil {
+public class PaginationUtil<T> {
+	private int pageSize = 20; // 每页显示条数
+	private int totalCount; // 总条数
+	private int totalPages; // 总页数
+	private List<T> pageList;// 数据
 
-	@SuppressWarnings("rawtypes")
-	public static List results = new ArrayList();
-
-	private static final Integer PAGE_SIZE = 20;
-
-	@SuppressWarnings("rawtypes")
-	public static Map<String, Object> getResults(int currentPage) {
-		Map<String, Object> result = new HashMap<String, Object>();
-		// 总记录数
-		Integer totalCount = results.size();
-		result.put("totalCount", totalCount);
-		// 总页数
-		Integer totalpage = 0;
-		if (totalCount % PAGE_SIZE == 0) {
-			totalpage = totalCount / PAGE_SIZE;
-		} else {
-			totalpage = totalCount / PAGE_SIZE + 1;
+	public PaginationUtil(List<T> pageList) {
+		this.totalCount = pageList.size();
+		// 计算总页数
+		this.totalPages = this.totalCount / this.pageSize;
+		if (this.totalCount % this.pageSize != 0) {
+			this.totalPages++;
 		}
-		result.put("totalpage", totalpage);
-		// 获取起始数
-		Integer fromIndex = (currentPage - 1) * PAGE_SIZE;
-		// 结尾数
-		Integer toIndex = currentPage * PAGE_SIZE;
-		if (toIndex > totalCount) {
-			toIndex = totalCount;
-		}
-		List subList = results.subList(fromIndex, toIndex);
-		result.put("result", subList);
-		return result;
+		this.pageList = pageList;
 	}
 
-	public static void main(String[] args) {
-		List<Long> datas = Arrays.asList(new Long[] { 1L, 2L, 3L, 4L, 5L, 6L, 7L, 8L });
-		PaginationUtil.results = datas;
-		PaginationUtil.getResults(3);
+	public Map<String, Object> subList(int pageNo) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		int start = (pageNo - 1) * this.pageSize;
+		int end = pageNo * this.pageSize;
+		map.put("result", pageList.subList(start, end));
+		map.put("totalpage", this.totalPages);
+		return map;
 	}
+
+	public int getPageSize() {
+		return pageSize;
+	}
+
+	public void setPageSize(int pageSize) {
+		this.pageSize = pageSize;
+	}
+
+	public int getTotalCount() {
+		return totalCount;
+	}
+
+	public void setTotalCount(int totalCount) {
+		this.totalCount = totalCount;
+	}
+
+	public int getTotalPages() {
+		return totalPages;
+	}
+
+	public void setTotalPages(int totalPages) {
+		this.totalPages = totalPages;
+	}
+
+	public List<T> getPageList() {
+		return pageList;
+	}
+
+	public void setPageList(List<T> pageList) {
+		this.pageList = pageList;
+	}
+
 }

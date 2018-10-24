@@ -87,8 +87,9 @@ public class SchoolControl {
 	@RequestMapping(value = "/getSchoolList.do", method = { RequestMethod.GET })
 	public void getSchoolList(HttpServletRequest req, HttpServletResponse response, Model model, String schoolType) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		PaginationUtil.results = schoolService.selectSchools(schoolType);
-		map.put("datas", PaginationUtil.getResults(1));
+		PaginationUtil<SchoolDto> pageUtil = new PaginationUtil<SchoolDto>(schoolService.selectSchools(schoolType));
+		req.getSession().setAttribute("pageUtil", pageUtil);
+		map.put("datas", pageUtil.subList(1));
 		response.setContentType("application/json; charset=UTF-8");
 		PrintWriter out = null;
 		try {
@@ -100,7 +101,7 @@ public class SchoolControl {
 			log.error("SchoolControl->getSchoolList报错:" + e);
 		}
 	}
-	
+
 	/**
 	 * 获取更多信息
 	 * 
@@ -108,10 +109,12 @@ public class SchoolControl {
 	 * @param response
 	 * @param model
 	 */
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/getMore.do", method = { RequestMethod.GET })
 	public void getMore(HttpServletRequest req, HttpServletResponse response, Model model, Integer page) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("datas", PaginationUtil.getResults(page));
+		PaginationUtil<SchoolDto> pageUtil = (PaginationUtil<SchoolDto>) req.getSession().getAttribute("pageUtil");
+		map.put("datas", pageUtil.subList(page));
 		response.setContentType("application/json; charset=UTF-8");
 		PrintWriter out = null;
 		try {
