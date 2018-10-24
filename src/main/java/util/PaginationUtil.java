@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 public class PaginationUtil<T> {
-	private int pageSize = 20; // 每页显示条数
+	public static int pageSize = 20; // 每页显示条数
 	private int totalCount; // 总条数
 	private int totalPages; // 总页数
 	private List<T> pageList;// 数据
@@ -30,14 +30,6 @@ public class PaginationUtil<T> {
 		map.put("result", pageList.subList(start, end));
 		map.put("totalpage", this.totalPages);
 		return map;
-	}
-
-	public int getPageSize() {
-		return pageSize;
-	}
-
-	public void setPageSize(int pageSize) {
-		this.pageSize = pageSize;
 	}
 
 	public int getTotalCount() {

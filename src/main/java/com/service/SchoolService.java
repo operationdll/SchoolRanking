@@ -1,6 +1,7 @@
 package com.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,10 @@ public class SchoolService {
 
 	public List<SchoolDto> selectSchools(String type) {
 		return baseMapper.selectSchools(type);
+	}
+
+	public List<SchoolDto> getMore(Map<String, Object> map) {
+		return baseMapper.getMore(map);
 	}
 
 	public int insertSchool(SchoolDto schoolDto) {

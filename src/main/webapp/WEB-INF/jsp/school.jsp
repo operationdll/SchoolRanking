@@ -492,13 +492,18 @@
 		                    if(rollH>=bodyH){
 		                    	$scope.page = $scope.page+1;
 		                    	var currentPage = $scope.page;
+		                    	var $params = {page:currentPage};
+		                    	var selectedItem = $scope.selectedItem;
+		    					if(selectedItem!=""){
+		    						$params = {page:currentPage,type:selectedItem};
+		    					}
 		                    	$http({
 		        			        method : "GET",
 		        			        url : "<%=basePath%>school/getMore.do",
-		        				    params: {page:currentPage}
+		        				    params: $params
 		        			    }).then(function mySucces(response) {
 		        			    	$scope.loadingShow = false;
-		        			        response.data.datas.result.forEach(function(element) {
+		        			        response.data.datas.forEach(function(element) {
 		        			        	$scope.items.push(element);
                                     });
 		        			    }, function myError(response) {

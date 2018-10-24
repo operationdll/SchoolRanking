@@ -88,7 +88,6 @@ public class SchoolControl {
 	public void getSchoolList(HttpServletRequest req, HttpServletResponse response, Model model, String schoolType) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		PaginationUtil<SchoolDto> pageUtil = new PaginationUtil<SchoolDto>(schoolService.selectSchools(schoolType));
-		req.getSession().setAttribute("pageUtil", pageUtil);
 		map.put("datas", pageUtil.subList(1));
 		response.setContentType("application/json; charset=UTF-8");
 		PrintWriter out = null;
@@ -109,12 +108,13 @@ public class SchoolControl {
 	 * @param response
 	 * @param model
 	 */
-	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/getMore.do", method = { RequestMethod.GET })
-	public void getMore(HttpServletRequest req, HttpServletResponse response, Model model, Integer page) {
+	public void getMore(HttpServletRequest req, HttpServletResponse response, Model model, Integer page, String type) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		PaginationUtil<SchoolDto> pageUtil = (PaginationUtil<SchoolDto>) req.getSession().getAttribute("pageUtil");
-		map.put("datas", pageUtil.subList(page));
+		map.put("type", type);
+		map.put("start", (page - 1) * PaginationUtil.pageSize);
+		map.put("end", page * PaginationUtil.pageSize);
+		map.put("datas", schoolService.getMore(map));
 		response.setContentType("application/json; charset=UTF-8");
 		PrintWriter out = null;
 		try {
