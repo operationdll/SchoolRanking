@@ -22,7 +22,6 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
-			<version>4.3.7.RELEASE</version>
 		</dependency>
 		<!-- 连接池 -->
 		<dependency>
@@ -99,7 +98,6 @@
 		<dependency>
 			<groupId>org.springframework.amqp</groupId>
 			<artifactId>spring-rabbit</artifactId>
-			<version>1.4.0.RELEASE</version>
 		</dependency>
 		<!--Alibaba Json -->
 		<dependency>

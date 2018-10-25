@@ -86,7 +86,7 @@
 		}
 	</style>
 	</head>
-	<body ng-app="myApp" ng-controller="myCtrl">
+	<body ng-app="myApp" ng-controller="myCtrl" style="overflow-y:hidden;">
 		<div class="content" ng-show="listShow">
 			<div class="content">
 				<div class="module">
@@ -111,7 +111,7 @@
 									<a class="btn btn-success" href="school/initXSL.do">导入excel</a>
 								</label>
 							</div>
-							<div style="height:70%;overflow-y:scroll; width:98%;" id="myscroll">
+							<div style="height:65%;overflow-y:scroll; width:98%;" id="myscroll">
 								<table class="table table-striped table-bordered table-condensed">
 									<thead>
 										<tr>
